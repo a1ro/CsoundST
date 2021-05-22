@@ -7,11 +7,16 @@ file_extensions:
   - sco
 scope: source.csound
 
+variables:
+  pyrun:         '\b(pyl?run)(i|t)?\b'      # embed python code
+  pyrun_trigger: '\b(g)?(k)[A-Za-z0-9_]+\b' # with optional trigger
+  
 contexts:
   main:
-    - match: (pyrun|pylrun)(i|t)?
+    - match: '{{pyrun}}'
       scope: support.function.csound
       push: python
+    
     - match: \b(sr|kr|ksmps|nchnls|0dbfs)\b
       scope: constant.language.csound
     - include: numeric
@@ -94,17 +99,22 @@ contexts:
           pop: true
 
   python:
-    - match: "{{"
-      scope: source.python
-      push: Packages/Python/Python.sublime-syntax
-      with_prototype:
-        - match: "}" # Need a better solution here
-          pop: true
-    - match: "}"
-      pop: true
-    - match: '"'
-      set: string
+    - match: '{{pyrun_trigger}}'   # if present
+      scope: variable.csound
+      captures:
+        1: storage.modifier.global.csound # ( g )
+        2: storage.modifier.type.csound   # ( k )
 
+    - match: '"' # one-liner
+      embed: Python.sublime-syntax
+      escape: '"'
+    
+    - match: '{{' # multiline code block
+      embed: Python.sublime-syntax
+      escape: '}}'
+
+    - match: '$'
+      pop: true
+      
   prototype:
     - include: comments
-    
