@@ -30,7 +30,7 @@ contexts:
       scope: entity.name.tag.csound
       push: score
 
-      # instrument block
+    # instrument block
     - match: '\b(instr)\b'
       scope: entity.name.function.begin.csound
       push:
@@ -45,7 +45,7 @@ contexts:
     - match: '\b(endin)\b'
       scope: entity.name.function.end.csound
 
-      # user-defined opcode block
+    # user-defined opcode block
     - match: '\b(opcode)\b'
       scope: entity.name.function.begin.csound
     - match: '\b(endop)\b'
@@ -70,8 +70,6 @@ contexts:
       scope: entity.name.function.csound
     - match: (;).*$\n?
       scope: comment.line.double-slash.csound
-    - match: '"'
-      push: string
 
   numeric:
     - match: (-?[0-9]|\sz\s)
@@ -89,23 +87,45 @@ contexts:
     - include: numeric
     - match: \b(i|f)\s?([0-9]+\b)?
       scope: support.class.instr.csound
-    - match: '"'
-      push: string
     - match: (</CsScore>)
       scope: entity.name.tag
       pop: true
 
   string:
-    - meta_scope: string.quoted.double.csound
     - meta_include_prototype: false
-    - match: (%[0-9]?\.?[0-9]?)(d|i|o|u|x|X|e|E|f|F|g|G|c|s])
+
+    - match: '"' # single line string
+      scope: punctuation.definition.string.begin.csound
+      push:
+      - meta_content_scope: string.quoted.double.csound
+      - include: string_syntax
+      - match: '"'
+        scope: punctuation.definition.string.end.csound
+        pop: true
+
+    - match: '{{' # multiline string block
+      scope: punctuation.definition.string.begin.csound
+      push:
+      - meta_content_scope: string.quoted.bracket.csound
+      - include: string_syntax
+      - match: '}}'
+        scope: punctuation.definition.string.end.csound
+        pop: true         
+
+  string_syntax:
+    - meta_include_prototype: false
+
+    # sprintf formatted string
+    - match: '(%[0-9]?\.?[0-9]?)(d|i|o|u|x|X|e|E|f|F|g|G|c|s])'
       scope: constant.other.placeholder
-    - match: \\.
+
+    # escape sequence
+    - match: '\\.'
       scope: constant.character.escape.csound
-    - match: '"'
-      pop: true
 
   comments:
+    - meta_include_prototype: false
+
     - match: ^/\* =(\s*.*?)\s*= \*/$\n?
       scope: comment.block.csound
     - match: /\*
@@ -127,13 +147,15 @@ contexts:
           pop: true
 
   python:
-    - match: '{{pyrun_trigger}}'   # if present
+    - meta_include_prototype: false
+
+    - match: '{{pyrun_trigger}}' # if present
       scope: variable.csound
       captures:
         1: storage.modifier.global.csound # ( g )
         2: storage.modifier.type.csound   # ( k )
 
-    - match: '"' # one-liner
+    - match: '"' # single line code
       scope: punctuation.definition.python.begin.csound
       embed: Python.sublime-syntax
       escape: '"'
@@ -152,3 +174,4 @@ contexts:
       
   prototype:
     - include: comments
+    - include: string
