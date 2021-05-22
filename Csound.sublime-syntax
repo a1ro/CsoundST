@@ -15,6 +15,7 @@ variables:
   
 contexts:
   main:
+    # python
     - match: '{{pyrun}}'
       scope: support.function.csound
       push: python
@@ -133,12 +134,18 @@ contexts:
         2: storage.modifier.type.csound   # ( k )
 
     - match: '"' # one-liner
+      scope: punctuation.definition.python.begin.csound
       embed: Python.sublime-syntax
       escape: '"'
+      escape_captures:
+        0: punctuation.definition.python.end.csound
     
     - match: '{{' # multiline code block
+      scope: punctuation.definition.python.begin.csound
       embed: Python.sublime-syntax
       escape: '}}'
+      escape_captures:
+        0: punctuation.definition.python.end.csound
 
     - match: '$'
       pop: true
