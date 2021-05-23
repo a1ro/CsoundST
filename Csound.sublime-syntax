@@ -68,22 +68,18 @@ contexts:
       scope: constant.character.csound
     - match: ((#|\$)[A-Za-z0-9_]+\b|#)
       scope: entity.name.function.csound
-    - match: (;).*$\n?
-      scope: comment.line.double-slash.csound
 
   numeric:
     - match: (-?[0-9]|\sz\s)
       scope: constant.numeric.csound
 
   options:
-    - include: comments
     - meta_scope: source.csound
     - match: (</CsOptions>|</CsLicense>)
       scope: entity.name.tag.csound
       pop: true
 
   score:
-    - include: comments
     - include: numeric
     - match: \b(i|f)\s?([0-9]+\b)?
       scope: support.class.instr.csound
@@ -148,6 +144,7 @@ contexts:
 
   python:
     - meta_include_prototype: false
+    - include: comments
 
     - match: '{{pyrun_trigger}}' # if present
       scope: variable.csound
