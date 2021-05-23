@@ -151,25 +151,37 @@ contexts:
   comments:
     - meta_include_prototype: false
 
-    - match: ^/\* =(\s*.*?)\s*= \*/$\n?
-      scope: comment.block.csound
-    - match: /\*
+    - match: '^#!' # hashbang (on first line)
       scope: punctuation.definition.comment.csound
       push:
-        - meta_scope: comment.block.csound
-        - match: \*/
-          scope: punctuation.definition.comment.csound
+        - meta_scope: comment.line.hashbang.csound
+        - match: '$'
           pop: true
-    - match: \*/
-      scope: invalid.illegal.stray-comment-end.csound
-    - match: (;).*$\n?
-      scope: comment.line.double-slash.csound
-    - match: ;
+
+    - match: ';' # single line comment
+      scope: punctuation.definition.comment.csound
+      push:
+        - meta_scope: comment.line.semicolon.csound
+        - match: '$'
+          pop: true
+
+    - match: '//' # single line comment
       scope: punctuation.definition.comment.csound
       push:
         - meta_scope: comment.line.double-slash.csound
-        - match: \n
+        - match: '$'
           pop: true
+
+    - match: '/\*' # multiline code block
+      scope: punctuation.definition.comment.begin.csound
+      push:
+        - meta_scope: comment.block.csound
+        - match: '\*/'
+          scope: punctuation.definition.comment.end.csound
+          pop: true
+
+    # - match: \*/
+    #   scope: invalid.illegal.stray-comment-end.csound
 
   python:
     - meta_include_prototype: false
