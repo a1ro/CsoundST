@@ -13,6 +13,10 @@ variables:
 
   variable: '\b(g)?(i|k|a|f|S)[A-Za-z0-9_]+\b' # csound variable
   
+  arithmetic: '\s(\+|\-|\*|\/|\^|\%)\s'
+  assignment: '\s(\=|\+\=|\-\=|\*\=|\/\=)\s'
+  comparison: '\s(\<\=|\>\=|\<|\>|\=\=|\!\=)\s'
+
 contexts:
   main:
     # python
@@ -60,8 +64,14 @@ contexts:
         1: storage.modifier.global.csound # ( g )
         2: storage.modifier.type.csound   # ( i k a f S)
 
-    - match: (\+|\-|\*|\/|\%|\=|\s\<\s|\s\>\s)
-      scope: entity.name.tag.csound
+    # operators
+    - match: '{{arithmetic}}' # ( + - * / ^ % )
+      scope: keyword.operator.arithmetic.csound
+    - match: '{{assignment}}' # ( = += -= *= /= )
+      scope: keyword.operator.assignment.csound
+    - match: '{{comparison}}' # ( <= >= < > == != )
+      scope: keyword.operator.comparison.csound
+
     - match: (\<(/?[^\>]+)\>)
       scope: entity.name.tag.csound
     - match: \bp[0-9]+\b
