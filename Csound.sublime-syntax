@@ -83,6 +83,12 @@ contexts:
     - match: ','
       scope: punctuation.separator.arguments.csound
 
+    # brackets
+    - match: '\('
+      scope: punctuation.definition.begin
+    - match: '\)'
+      scope: punctuation.definition.end
+
     - match: (\<(/?[^\>]+)\>)
       scope: entity.name.tag.csound
     - match: \bp[0-9]+\b
