@@ -43,7 +43,7 @@ contexts:
         - match: '[A-Za-z0-9_]+' # name(s)
           scope: variable.parameter.csound
         - match: ','
-          scope: punctuation.separator.parameter.csound
+          scope: punctuation.separator.arguments.csound
         - match: '$'
           pop: true
     - match: '\b(endin)\b'
@@ -71,6 +71,9 @@ contexts:
       scope: keyword.operator.assignment.csound
     - match: '{{comparison}}' # ( <= >= < > == != )
       scope: keyword.operator.comparison.csound
+
+    - match: ','
+      scope: punctuation.separator.arguments.csound
 
     - match: (\<(/?[^\>]+)\>)
       scope: entity.name.tag.csound
