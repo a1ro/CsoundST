@@ -43,12 +43,11 @@ contexts:
     - match: '\b(instr)\b'
       scope: entity.name.function.begin.csound
       push:
-        - match: '\+' # perform last
-          scope: keyword.operator.arithmetic.csound
-        - match: '[A-Za-z0-9_]+' # name(s)
-          scope: variable.parameter.csound
-        - match: ','
-          scope: punctuation.separator.arguments.csound
+        - match: '(\+)?[A-Za-z0-9_]+(,)?'
+          scope: variable.parameter.csound            # instr name(s)
+          captures:
+            1: keyword.operator.arithmetic.csound     # persform last  ( + )
+            2: punctuation.separator.arguments.csound # separate names ( , )
         - match: '$'
           pop: true
     - match: '\b(endin)\b'
@@ -97,8 +96,11 @@ contexts:
       scope: entity.name.function.csound
 
   numeric:
-    - match: (-?[0-9]|\sz\s)
-      scope: constant.numeric.csound
+    - match: '(-)?[0-9]+(.)?[0-9]*' # either int or float
+      scope: constant.numeric.value.csound
+      captures:
+        1: keyword.operator.arithmetic.csound
+        2: punctuation.separator.decimal.csound
 
   options:
     - meta_scope: source.csound
