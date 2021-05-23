@@ -32,7 +32,8 @@ contexts:
       scope: constant.other.csound
 
     - include: numeric
-    - match: (<CsOptions>|<CsLicense>)
+
+    - match: '<CsOptions>'
       scope: entity.name.tag.csound
       push: options
     - match: (<CsScore>)
@@ -103,8 +104,15 @@ contexts:
         2: punctuation.separator.decimal.csound
 
   options:
-    - meta_scope: source.csound
-    - match: (</CsOptions>|</CsLicense>)
+    - match: '(-(?:-|\+)?)[A-Za-z0-9_-]+(?:(\=)([^"].*\b)?)?'
+      scope: variable.parameter.option.csound
+      captures:
+        1: punctuation.definition.parameter.csound # minus/plus ( - + )
+        2: keyword.operator.assignment.csound      # equal sign ( = )
+        3: string.unquoted.csound                  # unquoted argument
+    - match: ':' # for arguments like adc/dac
+      scope: punctuation.separator.argument.csound
+    - match: '</CsOptions>'
       scope: entity.name.tag.csound
       pop: true
 
