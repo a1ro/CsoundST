@@ -24,8 +24,10 @@ contexts:
       scope: support.function.csound
       push: python
     
-    - match: \b(sr|kr|ksmps|nchnls|0dbfs)\b
-      scope: constant.language.csound
+    # orchestra header
+    - match: '\b(A4|sr|kr|ksmps|nchnls(_i)?|0dbfs)\b'
+      scope: constant.other.csound
+
     - include: numeric
     - match: (<CsOptions>|<CsLicense>)
       scope: entity.name.tag.csound
