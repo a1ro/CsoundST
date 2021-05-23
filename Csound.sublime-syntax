@@ -62,7 +62,7 @@ contexts:
       scope: variable.csound
       captures:
         1: storage.modifier.global.csound # ( g )
-        2: storage.modifier.type.csound   # ( i k a f S)
+        # 2: storage.modifier.type.csound # ( i k a f S)
 
     # operators
     - match: '{{arithmetic}}' # ( + - * / ^ % )
@@ -163,7 +163,7 @@ contexts:
       scope: variable.csound
       captures:
         1: storage.modifier.global.csound # ( g )
-        2: storage.modifier.type.csound   # ( k )
+        # 2: storage.modifier.type.csound # ( k )
 
     - match: '"' # single line code
       scope: punctuation.definition.python.begin.csound
