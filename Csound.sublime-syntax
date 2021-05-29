@@ -39,6 +39,19 @@ contexts:
     - match: '<.+>' # any section tag
       scope: entity.name.tag.csound
 
+  options:
+    - match: '(-(?:-|\+)?)[A-Za-z0-9_-]+(?:(\=)([^"].*\b)?)?'
+      scope: variable.parameter.option.csound
+      captures:
+        1: punctuation.definition.parameter.csound # minus/plus ( - + )
+        2: keyword.operator.assignment.csound      # equal sign ( = )
+        3: string.unquoted.csound                  # unquoted argument
+    - match: ':' # for arguments like adc/dac
+      scope: punctuation.separator.argument.csound
+    - match: '</CsOptions>'
+      scope: entity.name.tag.csound
+      pop: true
+
   orchestra:
     # python
     - match: '{{pyrun}}'
@@ -99,6 +112,27 @@ contexts:
       scope: entity.name.tag.csound
       pop: true
 
+  score:
+    - include: macros
+    - include: numeric
+
+    # score statements
+    - match: '^\s*(a|b|B|C|d|e|f|i|m|n|q|r|s|t|v|x|y|\{|\})'
+      scope: variable.function.csound
+
+    - match: '\s\.' # explicit pfield carry
+      scope: punctuation.separator.carry
+
+    - match: '(</CsScore>)'
+      scope: entity.name.tag.csound
+      pop: true
+
+  macros:
+    - match: '\#[A-Z][A-Za-z0.9]+\#' # define
+      scope: entity.name.function.csound
+    - match: '\$[A-Z][A-Za-z0-9]+\b' # call
+      scope: entity.name.function.csound
+
   numeric:
       # integer or float w/ optional leading symbols
     - match: '(\^?[-+])?[0-9]+(.)?[0-9]*'
@@ -114,40 +148,6 @@ contexts:
       scope: keyword.operator.assignment.csound
     - match: '{{comparison}}' # ( <= >= < > == != )
       scope: keyword.operator.comparison.csound
-
-  macros:
-    - match: '\#[A-Z][A-Za-z0.9]+\#' # define
-      scope: entity.name.function.csound
-    - match: '\$[A-Z][A-Za-z0-9]+\b' # call
-      scope: entity.name.function.csound
-
-  options:
-    - match: '(-(?:-|\+)?)[A-Za-z0-9_-]+(?:(\=)([^"].*\b)?)?'
-      scope: variable.parameter.option.csound
-      captures:
-        1: punctuation.definition.parameter.csound # minus/plus ( - + )
-        2: keyword.operator.assignment.csound      # equal sign ( = )
-        3: string.unquoted.csound                  # unquoted argument
-    - match: ':' # for arguments like adc/dac
-      scope: punctuation.separator.argument.csound
-    - match: '</CsOptions>'
-      scope: entity.name.tag.csound
-      pop: true
-
-  score:
-    - include: macros
-    - include: numeric
-
-    # score statements
-    - match: '^\s*(a|b|B|C|d|e|f|i|m|n|q|r|s|t|v|x|y|\{|\})'
-      scope: variable.function.csound
-
-    - match: '\s\.' # explicit pfield carry
-      scope: punctuation.separator.carry
-
-    - match: '(</CsScore>)'
-      scope: entity.name.tag.csound
-      pop: true
 
   string:
     - meta_include_prototype: false
