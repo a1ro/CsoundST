@@ -22,23 +22,24 @@ variables:
 
 contexts:
   main:
+    - match: '<CsOptions>'
+      scope: entity.name.tag.csound
+      push: options
+
+    - match: '<CsScore>'
+      scope: entity.name.tag.csound
+      push: score
+
     # python
     - match: '{{pyrun}}'
       scope: support.function.csound
       push: python
-    
+
     # orchestra header
     - match: '\b(A4|sr|kr|ksmps|nchnls(_i)?|0dbfs)\b'
       scope: constant.csound
 
     - include: numeric
-
-    - match: '<CsOptions>'
-      scope: entity.name.tag.csound
-      push: options
-    - match: (<CsScore>)
-      scope: entity.name.tag.csound
-      push: score
 
     # instrument block
     - match: '\b(instr)\b'
