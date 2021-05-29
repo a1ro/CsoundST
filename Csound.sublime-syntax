@@ -119,10 +119,16 @@ contexts:
 
   score:
     - include: numeric
-    - match: \b(i|f)\s?([0-9]+\b)?
-      scope: support.class.instr.csound
-    - match: (</CsScore>)
-      scope: entity.name.tag
+
+    # score statements
+    - match: '^\s*(a|b|B|C|d|e|f|i|m|n|q|r|s|t|v|x|y|\{|\})'
+      scope: variable.function.csound
+
+    - match: '\s\.' # explicit pfield carry
+      scope: punctuation.separator.carry
+
+    - match: '(</CsScore>)'
+      scope: entity.name.tag.csound
       pop: true
 
   string:
@@ -218,7 +224,7 @@ contexts:
 
     - match: '$'
       pop: true
-      
+
   prototype:
     - include: comments
     - include: string
