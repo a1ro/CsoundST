@@ -12,6 +12,7 @@ variables:
   pyrun_trigger: '\b(g)?(k)[A-Za-z0-9_]+\b' # with optional trigger
 
   variable: '\b(g)?(i|k|a|f|S)[A-Za-z0-9_]+\b' # csound variable
+  pfield:   '\bp[0-9]+\b'                      # score parameter
   
   arithmetic: '\s(\+|\-|\*|\/|\^|\%)\s'
   assignment: '\s(\=|\+\=|\-\=|\*\=|\/\=)\s'
@@ -73,14 +74,8 @@ contexts:
       captures:
         1: storage.modifier.global.csound # ( g )
         # 2: storage.modifier.type.csound # ( i k a f S)
-
-    # operators
-    - match: '{{arithmetic}}' # ( + - * / ^ % )
-      scope: keyword.operator.arithmetic.csound
-    - match: '{{assignment}}' # ( = += -= *= /= )
-      scope: keyword.operator.assignment.csound
-    - match: '{{comparison}}' # ( <= >= < > == != )
-      scope: keyword.operator.comparison.csound
+    - match: '{{pfield}}'
+      scope: constant.character.csound    # ( p )
 
     # punctuation
     - match: ','
@@ -92,8 +87,6 @@ contexts:
 
     - match: '<.+>' # any section tag
       scope: entity.name.tag.csound
-    - match: \bp[0-9]+\b
-      scope: constant.character.csound
     - match: ((#|\$)[A-Za-z0-9_]+\b|#)
       scope: entity.name.function.csound
 
@@ -104,6 +97,14 @@ contexts:
       captures:
         1: keyword.operator.arithmetic.csound
         2: punctuation.separator.decimal.csound
+
+    # operators
+    - match: '{{arithmetic}}' # ( + - * / ^ % )
+      scope: keyword.operator.arithmetic.csound
+    - match: '{{assignment}}' # ( = += -= *= /= )
+      scope: keyword.operator.assignment.csound
+    - match: '{{comparison}}' # ( <= >= < > == != )
+      scope: keyword.operator.comparison.csound
 
   options:
     - match: '(-(?:-|\+)?)[A-Za-z0-9_-]+(?:(\=)([^"].*\b)?)?'
