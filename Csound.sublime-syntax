@@ -95,7 +95,7 @@ contexts:
     - match: '{{variable}}'
       scope: variable.csound
       captures:
-        1: storage.modifier.global.csound # ( g )
+        1: storage.type.global.csound # ( g )
         # 2: storage.modifier.type.csound # ( i k a f S)
     - match: '{{pfield}}'
       scope: constant.character.csound    # ( p )
@@ -128,10 +128,10 @@ contexts:
       pop: true
 
   macros:
-    - match: '\#[A-Z][A-Za-z0.9]+\#' # define
+    - match: '\#[A-Za-z][A-Za-z0-9]*\#' # define
       scope: entity.name.function.csound
-    - match: '\$[A-Z][A-Za-z0-9]+\b' # call
-      scope: entity.name.function.csound
+    - match: '\$[A-Za-z][A-Za-z0-9]*\b' # call
+      scope: variable.function.csound
 
   numeric:
       # integer or float w/ optional leading symbols
@@ -223,7 +223,7 @@ contexts:
     - match: '{{pyrun_trigger}}' # if present
       scope: variable.csound
       captures:
-        1: storage.modifier.global.csound # ( g )
+        1: storage.type.global.csound # ( g )
         # 2: storage.modifier.type.csound # ( k )
 
     - match: '"' # single line code
