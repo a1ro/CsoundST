@@ -90,7 +90,7 @@ contexts:
     - match: '\)'
       scope: punctuation.definition.end
 
-    - match: (\<(/?[^\>]+)\>)
+    - match: '<.+>' # any section tag
       scope: entity.name.tag.csound
     - match: \bp[0-9]+\b
       scope: constant.character.csound
