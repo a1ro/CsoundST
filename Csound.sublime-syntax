@@ -28,6 +28,10 @@ contexts:
       scope: entity.name.tag.csound
       push: options
 
+    - match: '<CsInstruments>'
+      scope: entity.name.tag.csound
+      push: orchestra
+
     - match: '<CsScore>'
       scope: entity.name.tag.csound
       push: score
@@ -35,6 +39,7 @@ contexts:
     - match: '<.+>' # any section tag
       scope: entity.name.tag.csound
 
+  orchestra:
     # python
     - match: '{{pyrun}}'
       scope: support.function.csound
@@ -89,6 +94,10 @@ contexts:
       scope: punctuation.definition.begin
     - match: '\)'
       scope: punctuation.definition.end
+
+    - match: '</CsInstruments>'
+      scope: entity.name.tag.csound
+      pop: true
 
   numeric:
       # integer or float w/ optional leading symbols
