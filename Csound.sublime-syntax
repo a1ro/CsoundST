@@ -1,10 +1,7 @@
 %YAML 1.2
 ---
 name: Csound
-file_extensions:
-  - csd
-  - orc
-  - sco
+file_extensions: [.csd]
 scope: source.csound
 
 variables:
