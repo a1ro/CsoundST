@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Csound Score
-file_extensions: [.sco]
+file_extensions: [sco]
 scope: source.csound
 extends: Csound.sublime-syntax
 

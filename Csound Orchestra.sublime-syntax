@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Csound Orchestra
-file_extensions: [.orc]
+file_extensions: [orc]
 scope: source.csound
 extends: Csound.sublime-syntax
 
