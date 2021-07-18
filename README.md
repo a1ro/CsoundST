@@ -1,6 +1,6 @@
-# CsoundST3
+# CsoundST
 
-Csound in Sublime Text 3.
+Csound syntax for Sublime Text 4
 
 ## About
 
