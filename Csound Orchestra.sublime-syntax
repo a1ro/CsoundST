@@ -3,6 +3,7 @@
 name: Csound Orchestra
 file_extensions: [orc, udo]
 scope: source.csound
+
 extends: Csound.sublime-syntax
 
 contexts:

@@ -3,6 +3,7 @@
 name: Csound Score
 file_extensions: [sco]
 scope: source.csound
+
 extends: Csound.sublime-syntax
 
 contexts:
