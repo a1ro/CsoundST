@@ -25,6 +25,7 @@ variables:
   arithmetic: '\s(\+|\-|\*|\/|\^|\%)\s'
   assignment: '\s(\=|\+\=|\-\=|\*\=|\/\=)\s'
   comparison: '\s(\<\=|\>\=|\<|\>|\=\=|\!\=)\s'
+  logical   : '\s(\&\&|\|\||\!)\s'
 
 contexts:
   main:
@@ -40,7 +41,7 @@ contexts:
       scope: entity.name.tag.csound
       push: score
 
-    - match: '<.+>' # any section tag
+    - match: '<.+>' # any other section tag
       scope: entity.name.tag.csound
 
   options:
@@ -74,9 +75,9 @@ contexts:
       scope: entity.name.function.begin.csound
       push:
         - match: '(\+)?[A-Za-z0-9_]+(,)?'
-          scope: variable.parameter.csound            # instr name(s)
+          scope: variable.parameter.csound # instr name(s)
           captures:
-            1: keyword.operator.arithmetic.csound     # persform last  ( + )
+            1: keyword.operator.arithmetic.csound     # perform last   ( + )
             2: punctuation.separator.arguments.csound # separate names ( , )
         - match: '$'
           pop: true
@@ -156,6 +157,8 @@ contexts:
       scope: keyword.operator.assignment.csound
     - match: '{{comparison}}' # ( <= >= < > == != )
       scope: keyword.operator.comparison.csound
+    - match: '{{logical}}'    # ( && || ! )
+      scope: keyword.operator.logical.csound
 
   string:
     - meta_include_prototype: false
