@@ -113,9 +113,9 @@ contexts:
     - match: ','
       scope: punctuation.separator.arguments.csound
     - match: '\('
-      scope: punctuation.definition.begin.csound
+      scope: punctuation.section.group.begin.csound
     - match: '\)'
-      scope: punctuation.definition.end.csound
+      scope: punctuation.section.group.end.csound
     - match: '\\(\n)' # line continuation ( \ )
       scope: punctuation.separator.continuation.line.csound
 
@@ -186,8 +186,8 @@ contexts:
   string_syntax:
     - meta_include_prototype: false
 
-    # sprintf formatted string
-    - match: '(%[0-9]?\.?[0-9]?)(d|i|o|u|x|X|e|E|f|F|g|G|c|s])'
+    # formatted output (printf and variants)
+    - match: '%((d|i|o|x|X|u|c|s)|(([0-9]?\.)?[0-9]?(f|F|e|E|g|G])))'
       scope: constant.other.placeholder.csound
 
     # escape sequence
