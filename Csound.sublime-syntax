@@ -27,6 +27,12 @@ variables:
   comparison: '\s(\<\=|\>\=|\<|\>|\=\=|\!\=)\s'
   logical   : '\s(\&\&|\|\||\!)\s'
 
+  # printf
+  decimal: '(%[0-9]{,3}(d|i|o|u))'
+  hex:     '(%[abcdefABCDEF0-9]{,3}(x|X))'
+  char:    '(%(c|s))'
+  float:   '(%([0-9]{,3}\.)?[0-9]{,3}(f|F|e|E|g|G]))'
+
 contexts:
   main:
     - match: '<CsOptions>'
@@ -187,7 +193,7 @@ contexts:
     - meta_include_prototype: false
 
     # formatted output (printf and variants)
-    - match: '%((d|i|o|x|X|u|c|s)|(([0-9]?\.)?[0-9]?(f|F|e|E|g|G])))'
+    - match: '{{decimal}}|{{hex}}|{{char}}|{{float}}'
       scope: constant.other.placeholder.csound
 
     # escape sequence
