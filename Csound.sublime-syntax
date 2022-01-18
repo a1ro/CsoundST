@@ -145,6 +145,8 @@ contexts:
       pop: true
 
   macros:
+    - match: '#include'
+      scope: keyword.control.import.include.csound
     - match: '\#[A-Za-z][A-Za-z0-9]*\#' # define
       scope: entity.name.function.csound
     - match: '\$[A-Za-z][A-Za-z0-9]*\b' # call
