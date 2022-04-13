@@ -164,6 +164,8 @@ contexts:
         1: keyword.control.import.define.csound
         2: entity.name.constant.preprocessor.csound
         3: punctuation.definition.string.replacement.csound
+    - match: '(^\s*#)|(#\s*$)' # number sign ( # ) at bol or eol
+      scope: punctuation.definition.string.replacement.csound
     - match: '\$[A-Za-z][A-Za-z0-9]*\b' # call
       scope: variable.function.csound
 
