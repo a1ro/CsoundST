@@ -159,15 +159,17 @@ contexts:
   macros:
     - match: '#include'
       scope: keyword.control.import.include.csound
-    - match: '(#define)\s+([A-Za-z][A-Za-z0-9]*)\s+(#)?'
+    - match: '(#define)\s+([A-Za-z][A-Za-z0-9]*)\s+(#)?' # define macro
       captures:
         1: keyword.control.import.define.csound
         2: entity.name.constant.preprocessor.csound
         3: punctuation.definition.string.replacement.csound
-    - match: '(^\s*#)|(#\s*$)' # number sign ( # ) at bol or eol
+    - match: '(^\s*#)|(#\s*$)' # number sign ( # ) at bol or eol (macro text delimiter)
       scope: punctuation.definition.string.replacement.csound
-    - match: '\$[A-Za-z][A-Za-z0-9]*\b' # call
-      scope: variable.function.csound
+    - match: '(\$)([A-Za-z][A-Za-z0-9]*)' # call macro
+      captures:
+        1: variable.function.csound
+        2: variable.csound
 
   numeric:
       # integer or float w/ optional leading symbols
