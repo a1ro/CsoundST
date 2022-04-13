@@ -92,9 +92,19 @@ contexts:
     - match: '\b(endin)\b'
       scope: entity.name.function.end.csound
 
-    # user-defined opcode block
+    # user defined opcode block
     - match: '\b(opcode)\b'
       scope: entity.name.function.begin.csound
+      push:
+        - match: '[A-Za-z][A-Za-z0-9_]+(,)\s?([0aikKS]+)(,)\s?([0aijkOPVJKopS]+)'
+          scope: variable.parameter.csound # opcode name
+          captures:
+            1: punctuation.separator.arguments.csound
+            2: storage.type.csound # opcode outtypes ( 0 a i k K S )
+            3: punctuation.separator.arguments.csound
+            4: storage.type.csound # opcode intypes  ( 0 a i j k O P V J K o p S )
+        - match: '$'
+          pop: true
     - match: '\b(endop)\b'
       scope: entity.name.function.end.csound
 
