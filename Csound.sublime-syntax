@@ -25,7 +25,7 @@ variables:
   arithmetic: '\s(\+|\-|\*|\/|\^|\%)\s'
   assignment: '\s(\=|\+\=|\-\=|\*\=|\/\=)\s'
   comparison: '\s(\<\=|\>\=|\<|\>|\=\=|\!\=)\s'
-  logical   : '\s(\&\&|\|\||\!)\s'
+  logical:    '\s(\&\&|\|\||\!)\s'
 
   # printf
   decimal: '(%[0-9]{,3}(d|i|o|u))'
@@ -80,6 +80,8 @@ contexts:
     - match: '\b(instr)\b'
       scope: entity.name.function.begin.csound
       push:
+        # see https://csound.com/docs/manual/OrchNamedInstruments.html
+        # for the plus ( + ) sign to perform instr after the others
         - match: '(\+)?[A-Za-z0-9_]+(,)?'
           scope: variable.parameter.csound # instr name(s)
           captures:
@@ -99,7 +101,7 @@ contexts:
     # standard opcodes
     - match: '{{opcode}}|{{software_bus}}|{{osc}}'
       scope: support.function.csound
-    - match: '\b({{udo}})\b'           # user defined opcodes
+    - match: '\b({{udo}})\b'     # user defined opcodes
       scope: variable.function.csound
     - match: '{{conditional}}'   # ( if then else ... )
       scope: keyword.control.conditional.csound
