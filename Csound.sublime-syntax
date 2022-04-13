@@ -159,8 +159,11 @@ contexts:
   macros:
     - match: '#include'
       scope: keyword.control.import.include.csound
-    - match: '\#[A-Za-z][A-Za-z0-9]*\#' # define
-      scope: entity.name.function.csound
+    - match: '(#define)\s+([A-Za-z][A-Za-z0-9]*)\s+(#)?'
+      captures:
+        1: keyword.control.import.define.csound
+        2: entity.name.constant.preprocessor.csound
+        3: punctuation.definition.string.replacement.csound
     - match: '\$[A-Za-z][A-Za-z0-9]*\b' # call
       scope: variable.function.csound
 
